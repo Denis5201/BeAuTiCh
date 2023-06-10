@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">BeAuT\'iCh</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="start_text">Планируй свой рабочий день с удобством</string>
+    <string name="forward">Вперед</string>
+    <string name="welcome_back">С возвращением!</string>
+    <string name="input_email">Введите email</string>
+    <string name="input_password">Введите пароль</string>
+    <string name="enter">Войти</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="input_surname">Введите фамилию*</string>
+    <string name="input_name">Введите имя*</string>
+    <string name="input_patronymic">Введите отчество</string>
+    <string name="input_confirm_password">Повторите пароль*</string>
+    <string name="already_have_account">У меня уже есть аккаунт</string>
 </resources>
