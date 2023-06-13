@@ -30,9 +30,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.beautich.R
-import com.example.beautich.WelcomeScreen
 import com.example.beautich.presentation.AppTextField
 import com.example.beautich.presentation.WhiteButton
+import com.example.beautich.presentation.navigation.Screen
 
 @Composable
 fun SignUpScreen(navController: NavController) {
@@ -154,10 +154,10 @@ fun SignUpScreen(navController: NavController) {
                     .fillMaxWidth()
                     .padding(start = 48.dp, bottom = 16.dp, end = 48.dp)
             ) {
-                navController.navigate(WelcomeScreen.SignInScreen.route)
+                navController.navigate(Screen.BottomNavigationScreen.route)
             }
             TextButton(
-                onClick = { navController.navigate(WelcomeScreen.SignInScreen.route) },
+                onClick = { navController.navigate(Screen.SignInScreen.route) },
                 modifier = Modifier.padding(bottom = 32.dp)
             ) {
                 Text(

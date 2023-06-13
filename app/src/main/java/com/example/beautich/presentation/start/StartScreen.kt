@@ -25,8 +25,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.beautich.R
-import com.example.beautich.WelcomeScreen
 import com.example.beautich.presentation.WhiteButton
+import com.example.beautich.presentation.navigation.Screen
 
 @Composable
 fun StartScreen(navController: NavController) {
@@ -77,7 +77,7 @@ fun StartScreen(navController: NavController) {
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 48.dp)
         ) {
-            navController.navigate(WelcomeScreen.SignInScreen.route)
+            navController.navigate(Screen.SignInScreen.route)
         }
     }
 }

@@ -1,4 +1,6 @@
-package com.example.beautich
+package com.example.beautich.presentation.navigation
+
+import com.example.beautich.R
 
 sealed class BottomNavScreen(val route: String, val icon: Int) {
     object Main : BottomNavScreen("main", R.drawable.home)
