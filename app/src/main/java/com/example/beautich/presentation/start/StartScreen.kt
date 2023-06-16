@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,13 +24,17 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.beautich.R
 import com.example.beautich.presentation.WhiteButton
 import com.example.beautich.presentation.navigation.Screen
 
 @Composable
-fun StartScreen(navController: NavController) {
+fun StartScreen(navController: NavController, viewModel: StartViewModel) {
+
+    val action = viewModel.action.collectAsStateWithLifecycle(null)
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -77,7 +82,27 @@ fun StartScreen(navController: NavController) {
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 48.dp)
         ) {
-            navController.navigate(Screen.SignInScreen.route)
+            viewModel.navigateToRegistration()
+        }
+    }
+
+    LaunchedEffect(action.value) {
+        when (action.value) {
+            StartAction.NavigateToSignIn -> {
+                navController.navigate(Screen.SignInScreen.route) {
+                    popUpTo(Screen.StartScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            StartAction.NavigateToSignUp -> {
+                navController.navigate(Screen.SignUpScreen.route) {
+                    popUpTo(Screen.StartScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            else -> {}
         }
     }
 }

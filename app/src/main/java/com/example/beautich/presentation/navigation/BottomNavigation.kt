@@ -30,6 +30,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.beautich.R
 import com.example.beautich.presentation.profile.ProfileScreen
+import com.example.beautich.presentation.profile.ProfileViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun BottomNavigation(navController: NavController) {
@@ -120,7 +122,8 @@ fun BottomNavigation(navController: NavController) {
 
             }
             composable(BottomNavScreen.Profile.route) {
-                ProfileScreen(navController = navController)
+                val viewModel = koinViewModel<ProfileViewModel>()
+                ProfileScreen(navController, viewModel)
             }
             composable(BottomNavScreen.Settings.route) {
 

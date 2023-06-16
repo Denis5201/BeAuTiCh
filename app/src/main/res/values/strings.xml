@@ -14,4 +14,15 @@
     <string name="input_patronymic">Введите отчество</string>
     <string name="input_confirm_password">Повторите пароль*</string>
     <string name="already_have_account">У меня уже есть аккаунт</string>
+    <string name="wrong_email_format">Неверный формат почты</string>
+    <string name="empty_input">Заполнены не все поля</string>
+    <string name="password_not_equal_with_confirm">Поля пароль и повторите пароль не совпадают</string>
+    <string name="wrong_form_password">Пароль должен содежать более 5 символов, цифры, буквы разных регистров</string>
+    <string name="exit">Выйти</string>
+    <string name="error">Ошибка!</string>
+    <string name="ok">Ок</string>
+    <string name="change_avatar">Сменить фото</string>
+    <string name="change_password">Сменить пароль</string>
+    <string name="phone">Телефон:</string>
+    <string name="email">Email:</string>
 </resources>

@@ -1,12 +1,16 @@
 package com.example.beautich.presentation
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -22,16 +26,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import com.example.beautich.R
 
 @Composable
@@ -136,5 +143,39 @@ fun AppTextField(
             }
         )
     }
+}
 
+@Composable
+fun ErrorDialog(
+    title: String = stringResource(R.string.error),
+    message: String,
+    dismiss: () -> Unit
+) {
+    Dialog(onDismissRequest = dismiss) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.tertiary, RoundedCornerShape(2.dp))
+                .padding(16.dp),
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleSmall,
+                color = Color.Red
+            )
+            Spacer(modifier = Modifier.padding(8.dp))
+            Text(
+                text = message,
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color.Black
+            )
+            Spacer(modifier = Modifier.padding(4.dp))
+            Text(
+                text = stringResource(R.string.ok),
+                modifier = Modifier.align(Alignment.CenterHorizontally).clickable { dismiss() },
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.secondary
+            )
+        }
+    }
 }

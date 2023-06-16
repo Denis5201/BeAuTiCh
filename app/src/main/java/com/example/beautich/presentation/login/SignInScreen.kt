@@ -13,10 +13,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,20 +24,18 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.beautich.R
 import com.example.beautich.presentation.AppTextField
+import com.example.beautich.presentation.ErrorDialog
 import com.example.beautich.presentation.WhiteButton
 import com.example.beautich.presentation.navigation.Screen
 
 @Composable
-fun SignInScreen(navController: NavController) {
-    var email by remember {
-        mutableStateOf("")
-    }
-    var password by remember {
-        mutableStateOf("")
-    }
+fun SignInScreen(navController: NavController, viewModel: SignInViewModel) {
+
+    val action by viewModel.action.collectAsStateWithLifecycle(null)
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -65,8 +61,8 @@ fun SignInScreen(navController: NavController) {
             Spacer(modifier = Modifier.padding(20.dp))
 
             AppTextField(
-                input = email,
-                valChange = { email = it },
+                input = viewModel.email.collectAsStateWithLifecycle().value,
+                valChange = { viewModel.setEmail(it) },
                 name = stringResource(R.string.input_email),
                 modifier = Modifier.padding(horizontal = 32.dp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
@@ -75,8 +71,8 @@ fun SignInScreen(navController: NavController) {
             Spacer(modifier = Modifier.padding(12.dp))
 
             AppTextField(
-                input = password,
-                valChange = { password = it },
+                input = viewModel.password.collectAsStateWithLifecycle().value,
+                valChange = { viewModel.setPassword(it) },
                 name = stringResource(R.string.input_password),
                 modifier = Modifier.padding(horizontal = 32.dp),
                 isPassword = true
@@ -95,10 +91,10 @@ fun SignInScreen(navController: NavController) {
                     .fillMaxWidth()
                     .padding(start = 48.dp, bottom = 16.dp, end = 48.dp)
             ) {
-                navController.navigate(Screen.BottomNavigationScreen.route)
+                viewModel.signIn()
             }
             TextButton(
-                onClick = { navController.navigate(Screen.SignUpScreen.route) },
+                onClick = { viewModel.navigateToSignUp() },
                 modifier = Modifier.padding(bottom = 32.dp)
             ) {
                 Text(
@@ -107,6 +103,34 @@ fun SignInScreen(navController: NavController) {
                     color = Color.White
                 )
             }
+        }
+    }
+
+    if (action is SignInAction.ShowError) {
+        ErrorDialog(message = (action as SignInAction.ShowError).message) {
+            viewModel.closeErrorDialog()
+        }
+    }
+
+    LaunchedEffect(action) {
+        when(action) {
+            SignInAction.NavigateToSignUp -> {
+                navController.navigate(Screen.SignUpScreen.route) {
+                    popUpTo(navController.graph.id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
+            SignInAction.NavigateToMain -> {
+                navController.navigate(Screen.BottomNavigationScreen.route) {
+                    popUpTo(Screen.SignInScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            else -> {}
         }
     }
 }

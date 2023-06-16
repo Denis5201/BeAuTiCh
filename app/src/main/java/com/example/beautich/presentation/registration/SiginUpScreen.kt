@@ -15,10 +15,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,32 +26,18 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.beautich.R
 import com.example.beautich.presentation.AppTextField
+import com.example.beautich.presentation.ErrorDialog
 import com.example.beautich.presentation.WhiteButton
 import com.example.beautich.presentation.navigation.Screen
 
 @Composable
-fun SignUpScreen(navController: NavController) {
-    var surname by remember {
-        mutableStateOf("")
-    }
-    var name by remember {
-        mutableStateOf("")
-    }
-    var patronymic by remember {
-        mutableStateOf("")
-    }
-    var email by remember {
-        mutableStateOf("")
-    }
-    var password by remember {
-        mutableStateOf("")
-    }
-    var confirm by remember {
-        mutableStateOf("")
-    }
+fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel) {
+
+    val action by viewModel.action.collectAsStateWithLifecycle(null)
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -86,8 +70,8 @@ fun SignUpScreen(navController: NavController) {
                     .padding(horizontal = 32.dp)
             ) {
                 AppTextField(
-                    input = surname,
-                    valChange = { surname = it },
+                    input = viewModel.surname.collectAsStateWithLifecycle().value,
+                    valChange = { viewModel.setSurname(it) },
                     name = stringResource(R.string.input_surname),
                     modifier = Modifier
                 )
@@ -95,8 +79,8 @@ fun SignUpScreen(navController: NavController) {
                 Spacer(modifier = Modifier.padding(12.dp))
 
                 AppTextField(
-                    input = name,
-                    valChange = { name = it },
+                    input = viewModel.name.collectAsStateWithLifecycle().value,
+                    valChange = { viewModel.setName(it) },
                     name = stringResource(R.string.input_name),
                     modifier = Modifier
                 )
@@ -104,8 +88,8 @@ fun SignUpScreen(navController: NavController) {
                 Spacer(modifier = Modifier.padding(12.dp))
 
                 AppTextField(
-                    input = patronymic,
-                    valChange = { patronymic = it },
+                    input = viewModel.patronymic.collectAsStateWithLifecycle().value,
+                    valChange = { viewModel.setPatronymic(it) },
                     name = stringResource(R.string.input_patronymic),
                     modifier = Modifier
                 )
@@ -113,8 +97,8 @@ fun SignUpScreen(navController: NavController) {
                 Spacer(modifier = Modifier.padding(12.dp))
 
                 AppTextField(
-                    input = email,
-                    valChange = { email = it },
+                    input = viewModel.email.collectAsStateWithLifecycle().value,
+                    valChange = { viewModel.setEmail(it) },
                     name = "${stringResource(R.string.input_email)}*",
                     modifier = Modifier,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
@@ -123,8 +107,8 @@ fun SignUpScreen(navController: NavController) {
                 Spacer(modifier = Modifier.padding(12.dp))
 
                 AppTextField(
-                    input = password,
-                    valChange = { password = it },
+                    input = viewModel.password.collectAsStateWithLifecycle().value,
+                    valChange = { viewModel.setPassword(it) },
                     name = "${stringResource(R.string.input_password)}*",
                     modifier = Modifier,
                     isPassword = true
@@ -133,8 +117,8 @@ fun SignUpScreen(navController: NavController) {
                 Spacer(modifier = Modifier.padding(12.dp))
 
                 AppTextField(
-                    input = confirm,
-                    valChange = { confirm = it },
+                    input = viewModel.confirm.collectAsStateWithLifecycle().value,
+                    valChange = { viewModel.setConfirm(it) },
                     name = stringResource(R.string.input_confirm_password),
                     modifier = Modifier,
                     isPassword = true
@@ -154,10 +138,10 @@ fun SignUpScreen(navController: NavController) {
                     .fillMaxWidth()
                     .padding(start = 48.dp, bottom = 16.dp, end = 48.dp)
             ) {
-                navController.navigate(Screen.BottomNavigationScreen.route)
+                viewModel.signUp()
             }
             TextButton(
-                onClick = { navController.navigate(Screen.SignInScreen.route) },
+                onClick = { viewModel.navigateToSignIn() },
                 modifier = Modifier.padding(bottom = 32.dp)
             ) {
                 Text(
@@ -166,6 +150,34 @@ fun SignUpScreen(navController: NavController) {
                     color = Color.White
                 )
             }
+        }
+    }
+
+    if (action is SignUpAction.ShowError) {
+        ErrorDialog(message = (action as SignUpAction.ShowError).message) {
+            viewModel.closeErrorDialog()
+        }
+    }
+
+    LaunchedEffect(action) {
+        when(action) {
+            SignUpAction.NavigateToSignIn -> {
+                navController.navigate(Screen.SignInScreen.route) {
+                    popUpTo(navController.graph.id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
+            SignUpAction.NavigateToMain -> {
+                navController.navigate(Screen.BottomNavigationScreen.route) {
+                    popUpTo(Screen.SignInScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            else -> {}
         }
     }
 }
