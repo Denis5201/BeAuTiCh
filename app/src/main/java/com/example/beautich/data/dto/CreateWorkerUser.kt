@@ -8,7 +8,6 @@ data class CreateWorkerUser(
     val email: String,
     val fullName: String,
     val password: String,
-    val birthDate: String,
     val phoneNumber: String?
 ) {
     companion object {
@@ -17,7 +16,6 @@ data class CreateWorkerUser(
                 email = registrationForm.email,
                 fullName = registrationForm.fullName,
                 password = registrationForm.password,
-                birthDate = registrationForm.birthDate.toString(),
                 phoneNumber = registrationForm.phoneNumber
             )
         }

@@ -12,7 +12,9 @@
     <string name="input_surname">Введите фамилию*</string>
     <string name="input_name">Введите имя*</string>
     <string name="input_patronymic">Введите отчество</string>
+    <string name="input_phone">Введите номер телефона</string>
     <string name="input_confirm_password">Повторите пароль*</string>
+    <string name="input_full_name">Введите ФИО*</string>
     <string name="already_have_account">У меня уже есть аккаунт</string>
     <string name="wrong_email_format">Неверный формат почты</string>
     <string name="empty_input">Заполнены не все поля</string>
@@ -21,8 +23,16 @@
     <string name="exit">Выйти</string>
     <string name="error">Ошибка!</string>
     <string name="ok">Ок</string>
-    <string name="change_avatar">Сменить фото</string>
+    <string name="change_avatar">Загрузить фото</string>
+    <string name="delete_avatar">Удалить фото</string>
+    <string name="change_profile_data">Изменить данные</string>
     <string name="change_password">Сменить пароль</string>
     <string name="phone">Телефон:</string>
     <string name="email">Email:</string>
+    <string name="choosing_where_take_photo">Выберите откуда загрузить фото</string>
+    <string name="gallery">Галерея</string>
+    <string name="camera">Камера</string>
+    <string name="cancel">Отмена</string>
+    <string name="new_profile_data">Введите новые данные</string>
+    <string name="update">Обновить</string>
 </resources>

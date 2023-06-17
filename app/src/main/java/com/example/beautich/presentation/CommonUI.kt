@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -178,4 +179,61 @@ fun ErrorDialog(
             )
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DialogTextField(
+    input: String?,
+    valChange: (String) -> Unit,
+    name: String,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val visualTransformation = VisualTransformation.None
+
+    BasicTextField(
+        value = input ?: "",
+        onValueChange = { valChange(it) },
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(40.dp)
+            .clip(RoundedCornerShape(20.dp)),
+        textStyle = MaterialTheme.typography.bodyMedium.copy(
+            color = MaterialTheme.colorScheme.primary,
+        ),
+        keyboardOptions = keyboardOptions,
+        singleLine = true,
+        interactionSource = interactionSource,
+        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+        visualTransformation = visualTransformation,
+        decorationBox = {
+            TextFieldDefaults.DecorationBox(
+                value = input ?: "",
+                innerTextField = it,
+                enabled = true,
+                singleLine = true,
+                placeholder = {
+                    Text(
+                        text = name,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primaryContainer
+                    )
+                },
+                colors = colors(
+                    focusedTextColor = MaterialTheme.colorScheme.primary,
+                    unfocusedTextColor = MaterialTheme.colorScheme.primary,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    focusedContainerColor = MaterialTheme.colorScheme.tertiary,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.tertiary,
+                    cursorColor = MaterialTheme.colorScheme.primary
+                ),
+                interactionSource = interactionSource,
+                contentPadding = PaddingValues(horizontal = 13.dp, vertical = 5.dp),
+                visualTransformation = visualTransformation
+            )
+        }
+    )
 }

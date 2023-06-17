@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 
 class SignUpViewModel(
     private val authRepository: AuthRepository,
@@ -44,6 +43,12 @@ class SignUpViewModel(
     val email: StateFlow<String> = _email
     fun setEmail(value: String) {
         _email.value = value
+    }
+
+    private val _phone = MutableStateFlow("")
+    val phone: StateFlow<String> = _phone
+    fun setPhone(value: String) {
+        _phone.value = value
     }
 
     private val _password = MutableStateFlow("")
@@ -83,7 +88,7 @@ class SignUpViewModel(
             authRepository.signUp(
                 RegistrationForm(_email.value.trim(),
                     "${_surname.value.trim()} ${_name.value.trim()}$endFullName",
-                    _password.value.trim(), LocalDate.now().minusDays(2), null)
+                    _password.value.trim(), _phone.value.ifEmpty { null })
             ).collect { result ->
                 result.onSuccess {
                     _action.send(SignUpAction.NavigateToMain)

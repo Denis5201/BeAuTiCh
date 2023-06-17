@@ -2,6 +2,7 @@ package com.example.beautich.presentation.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -56,7 +58,7 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
             Image(
                 bitmap = uiState.avatar!!.asImageBitmap(),
                 contentDescription = null,
-                modifier = Modifier.align(Alignment.TopStart),
+                modifier = Modifier.align(Alignment.TopCenter),
                 contentScale = ContentScale.FillWidth
             )
         }
@@ -74,17 +76,32 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
             color = Color.White
         )
 
-        Text(
-            text = stringResource(R.string.change_avatar),
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(end = 16.dp, bottom = 16.dp)
-                .clickable {
-
-                },
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.White
-        )
+        if (uiState.profile?.avatar == false) {
+            Text(
+                text = stringResource(R.string.change_avatar),
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(end = 16.dp, bottom = 16.dp)
+                    .clickable {
+                        viewModel.openPhotoDialog()
+                    },
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.White
+            )
+        }
+        if (uiState.profile?.avatar == true) {
+            Text(
+                text = stringResource(R.string.delete_avatar),
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(start = 16.dp, bottom = 16.dp)
+                    .clickable {
+                        viewModel.deletePhoto()
+                    },
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.White
+            )
+        }
     }
 
     uiState.profile?.let {
@@ -134,20 +151,38 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
             }
         }
 
-        Box(
+        AvatarLoader(uiState = uiState, uploadNewPhoto = { viewModel.uploadNewPhoto(it) },
+            closePhotoDialog = { viewModel.closePhotoDialog() }, setUri = { viewModel.setUri(it) }
+        )
+
+        Column(
             modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.BottomCenter
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom
         ) {
             WhiteButton(
-                text = stringResource(R.string.change_password),
+                text = stringResource(R.string.change_profile_data),
                 modifier = Modifier
-                    .width(230.dp)
-                    .padding(bottom = 40.dp)
+                    .width(240.dp)
+                    .padding(bottom = 20.dp)
             ) {
-
+                viewModel.openChangeProfileDialog()
+            }
+            TextButton(
+                onClick = {  },
+                modifier = Modifier.padding(bottom = 32.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.change_password),
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = Color.White
+                )
             }
         }
 
+        if (uiState.isChangeProfileDialogOpen) {
+            ChangeProfileDataDialog(viewModel = viewModel)
+        }
     }
 
 

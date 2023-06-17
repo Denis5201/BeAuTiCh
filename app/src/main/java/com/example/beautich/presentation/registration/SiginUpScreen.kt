@@ -107,6 +107,16 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel) {
                 Spacer(modifier = Modifier.padding(12.dp))
 
                 AppTextField(
+                    input = viewModel.phone.collectAsStateWithLifecycle().value,
+                    valChange = { viewModel.setPhone(it) },
+                    name = stringResource(R.string.input_phone),
+                    modifier = Modifier,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+                )
+
+                Spacer(modifier = Modifier.padding(12.dp))
+
+                AppTextField(
                     input = viewModel.password.collectAsStateWithLifecycle().value,
                     valChange = { viewModel.setPassword(it) },
                     name = "${stringResource(R.string.input_password)}*",
