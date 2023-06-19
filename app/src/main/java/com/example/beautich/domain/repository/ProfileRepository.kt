@@ -13,8 +13,4 @@ interface ProfileRepository {
     fun changePassword(): Flow<Result<Unit>>
 
     fun logout(): Flow<Result<Unit>>
-
-    fun isSubscribing(): Flow<Result<Boolean>>
-
-    fun changeSubscribing(isSubscribing: Boolean): Flow<Result<Unit>>
 }

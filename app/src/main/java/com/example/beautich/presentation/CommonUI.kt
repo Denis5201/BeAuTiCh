@@ -87,7 +87,8 @@ fun AppTextField(
             contentDescription = null,
             modifier = modifier
                 .fillMaxWidth()
-                .height(40.dp),
+                .height(40.dp)
+                .clip(RoundedCornerShape(20.dp)),
             contentScale = ContentScale.FillBounds
         )
         BasicTextField(
@@ -199,7 +200,7 @@ fun DialogTextField(
             .fillMaxWidth()
             .height(40.dp)
             .clip(RoundedCornerShape(20.dp)),
-        textStyle = MaterialTheme.typography.bodyMedium.copy(
+        textStyle = MaterialTheme.typography.bodySmall.copy(
             color = MaterialTheme.colorScheme.primary,
         ),
         keyboardOptions = keyboardOptions,
@@ -216,7 +217,7 @@ fun DialogTextField(
                 placeholder = {
                     Text(
                         text = name,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.primaryContainer
                     )
                 },

@@ -6,7 +6,7 @@ import com.example.beautich.MessageSource
 import com.example.beautich.domain.Validator
 import com.example.beautich.domain.model.Credentials
 import com.example.beautich.domain.repository.AuthRepository
-import com.example.beautich.domain.repository.ProfileRepository
+import com.example.beautich.domain.repository.SubscriptionRepository
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class SignInViewModel(
     private val authRepository: AuthRepository,
-    profileRepository: ProfileRepository,
+    subscriptionRepository: SubscriptionRepository,
     private val validator: Validator,
     private val messageSource: MessageSource
 ) : ViewModel() {
@@ -38,7 +38,7 @@ class SignInViewModel(
 
     init {
         viewModelScope.launch {
-            if (profileRepository.isSubscribing().single().isSuccess) {
+            if (subscriptionRepository.isSubscribing().single().isSuccess) {
                 _action.send(SignInAction.NavigateToMain)
             }
         }

@@ -59,26 +59,4 @@ class ProfileRepositoryImpl(
             emit(Result.failure(getError(e)))
         }
     }.flowOn(Dispatchers.IO)
-
-    override fun isSubscribing(): Flow<Result<Boolean>> = flow {
-        try {
-            val isSubscribing = api.isSubscribing()
-
-            emit(Result.success(isSubscribing))
-        } catch (e: Exception) {
-            Log.e("OPS isSubscribing", e.message.toString())
-            emit(Result.failure(getError(e)))
-        }
-    }.flowOn(Dispatchers.IO)
-
-    override fun changeSubscribing(isSubscribing: Boolean): Flow<Result<Unit>> = flow {
-        try {
-            api.changeSubscribing(isSubscribing)
-
-            emit(Result.success(Unit))
-        } catch (e: Exception) {
-            Log.e("OPS changeSubscribing", e.message.toString())
-            emit(Result.failure(getError(e)))
-        }
-    }.flowOn(Dispatchers.IO)
 }

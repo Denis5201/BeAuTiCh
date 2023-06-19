@@ -2,6 +2,7 @@ package com.example.beautich.presentation.navigation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,6 +32,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.beautich.R
 import com.example.beautich.presentation.profile.ProfileScreen
 import com.example.beautich.presentation.profile.ProfileViewModel
+import com.example.beautich.presentation.settings.SettingsScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -41,6 +43,7 @@ fun BottomNavigation(navController: NavController) {
     val currentDestination = navBackStackEntry?.destination
 
     Scaffold(
+        contentWindowInsets = WindowInsets(top = 0.dp),
         bottomBar = {
             val items = listOf(
                 BottomNavScreen.Main, BottomNavScreen.Search,
@@ -126,7 +129,7 @@ fun BottomNavigation(navController: NavController) {
                 ProfileScreen(navController, viewModel)
             }
             composable(BottomNavScreen.Settings.route) {
-
+                SettingsScreen(navController)
             }
         }
     }

@@ -8,6 +8,10 @@ import com.example.beautich.presentation.login.SignInScreen
 import com.example.beautich.presentation.login.SignInViewModel
 import com.example.beautich.presentation.registration.SignUpScreen
 import com.example.beautich.presentation.registration.SignUpViewModel
+import com.example.beautich.presentation.settings.MyServicesScreen
+import com.example.beautich.presentation.settings.MyServicesViewModel
+import com.example.beautich.presentation.settings.SubscriptionScreen
+import com.example.beautich.presentation.settings.SubscriptionViewModel
 import com.example.beautich.presentation.start.StartScreen
 import com.example.beautich.presentation.start.StartViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -32,6 +36,14 @@ fun Navigation() {
         }
         composable(Screen.BottomNavigationScreen.route) {
             BottomNavigation(navController)
+        }
+        composable(Screen.SubscriptionScreen.route) {
+            val viewModel = koinViewModel<SubscriptionViewModel>()
+            SubscriptionScreen(navController, viewModel)
+        }
+        composable(Screen.MyServicesScreen.route) {
+            val viewModel = koinViewModel<MyServicesViewModel>()
+            MyServicesScreen(navController, viewModel)
         }
     }
 }

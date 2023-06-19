@@ -35,4 +35,25 @@
     <string name="cancel">Отмена</string>
     <string name="new_profile_data">Введите новые данные</string>
     <string name="update">Обновить</string>
+    <string name="settings">Настройки</string>
+    <string name="watch_my_services">Посмотреть мои услуги</string>
+    <string name="info_about_subscription">Информация о подписке</string>
+    <string name="subscription_date">Подписка была оформлена: %1$s</string>
+    <string name="unsubscribe">Отменить подписку</string>
+    <string name="no_subscription">У вас еще нет подписки. Скорее оформляйте</string>
+    <string name="no_subscription_for_services">Вы можете создавать свои услуги! Но необходима подписка</string>
+    <string name="subscribe">Оформить</string>
+    <string name="your_services">Ваши услуги</string>
+    <string name="empty_services_list">У вас пока нет ни одной услуги</string>
+    <string name="save">Сохранить</string>
+    <string name="add_service">Добавление услуги</string>
+    <string name="change_service">Редактирование услуги</string>
+    <string name="service_dialog_hint">При вводе продолжительности услуги необходимо указать время через “:”. Пример: 00:35, то есть 35 минут</string>
+    <string name="input_service_name">Введите название услуги*</string>
+    <string name="input_service_price">Введите цену услуги*</string>
+    <string name="input_service_duration">Введите продолжительность услуги*</string>
+    <string name="choose_action">Выберите действие</string>
+    <string name="menu_dialog_hint">Вы можете отредактировать или удалить услугу с названием “%1$s”</string>
+    <string name="delete">Удалить</string>
+    <string name="change">Изменить</string>
 </resources>

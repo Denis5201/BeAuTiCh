@@ -145,6 +145,7 @@ fun NewPhotoDialog(
                 )
 
                 Spacer(modifier = Modifier.padding(start = 24.dp))
+
                 Text(
                     text =  stringResource(R.string.camera),
                     modifier = Modifier.clickable {
