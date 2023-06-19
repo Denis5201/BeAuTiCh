@@ -129,7 +129,7 @@ fun MyServicesScreen(navController: NavController, viewModel: MyServicesViewMode
                             modifier = Modifier
                                 .padding(bottom = 8.dp)
                                 .background(MaterialTheme.colorScheme.tertiary, RoundedCornerShape(20.dp))
-                                .pointerInput(Unit) {
+                                .pointerInput(it) {
                                     detectTapGestures(
                                         onLongPress = { _ ->
                                             viewModel.openMenuDialog(it)
