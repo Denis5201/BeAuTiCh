@@ -30,8 +30,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.beautich.R
+import com.example.beautich.presentation.main.MainScreen
+import com.example.beautich.presentation.main.MainViewModel
 import com.example.beautich.presentation.profile.ProfileScreen
 import com.example.beautich.presentation.profile.ProfileViewModel
+import com.example.beautich.presentation.search.SearchScreen
+import com.example.beautich.presentation.search.SearchViewModel
 import com.example.beautich.presentation.settings.SettingsScreen
 import org.koin.androidx.compose.koinViewModel
 
@@ -119,10 +123,12 @@ fun BottomNavigation(navController: NavController) {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(BottomNavScreen.Main.route) {
-
+                val viewModel = koinViewModel<MainViewModel>()
+                MainScreen(navController, viewModel)
             }
             composable(BottomNavScreen.Search.route) {
-
+                val viewModel = koinViewModel<SearchViewModel>()
+                SearchScreen(navController, viewModel)
             }
             composable(BottomNavScreen.Profile.route) {
                 val viewModel = koinViewModel<ProfileViewModel>()
