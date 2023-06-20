@@ -41,6 +41,18 @@ class ProfileViewModel(
         _phone.value = value
     }
 
+    private val _oldPassword = MutableStateFlow("")
+    val oldPassword: StateFlow<String> = _oldPassword
+    fun setOldPassword(value: String) {
+        _oldPassword.value = value
+    }
+
+    private val _newPassword = MutableStateFlow("")
+    val newPassword: StateFlow<String> = _newPassword
+    fun setNewPassword(value: String) {
+        _newPassword.value = value
+    }
+
     init {
         getProfile()
     }
@@ -104,6 +116,18 @@ class ProfileViewModel(
     fun closeChangeProfileDialog() {
         _uiState.value = _uiState.value.copy(
             isChangeProfileDialogOpen = false
+        )
+    }
+
+    fun openChangePasswordDialog() {
+        _uiState.value = _uiState.value.copy(
+            isChangePasswordDialogOpen = true
+        )
+    }
+
+    fun closeChangePasswordDialog() {
+        _uiState.value = _uiState.value.copy(
+            isChangePasswordDialogOpen = false
         )
     }
 
@@ -184,6 +208,27 @@ class ProfileViewModel(
                             phoneNumber = _phone.value
                         )
                     )
+                }.onFailure {
+                    _action.send(ProfileAction.ShowError(it.message ?: MessageSource.ERROR))
+                }
+            }
+        }
+    }
+
+    fun changePassword() {
+        if (_oldPassword.value.trim().isEmpty() || _newPassword.value.trim().isEmpty()) {
+            return
+        }
+        _uiState.value = _uiState.value.copy(
+            isChangePasswordDialogOpen = false
+        )
+        viewModelScope.launch {
+            profileRepository.changePassword(
+                _oldPassword.value.trim(), _newPassword.value.trim()
+            ).collect { result ->
+                result.onSuccess {
+                    _oldPassword.value = ""
+                    _newPassword.value = ""
                 }.onFailure {
                     _action.send(ProfileAction.ShowError(it.message ?: MessageSource.ERROR))
                 }

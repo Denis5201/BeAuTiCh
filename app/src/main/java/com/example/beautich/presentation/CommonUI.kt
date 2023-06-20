@@ -188,10 +188,15 @@ fun DialogTextField(
     input: String?,
     valChange: (String) -> Unit,
     name: String,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    isPassword: Boolean = false
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    val visualTransformation = VisualTransformation.None
+    val visualTransformation = if (isPassword) {
+        PasswordVisualTransformation()
+    } else {
+        VisualTransformation.None
+    }
 
     BasicTextField(
         value = input ?: "",
@@ -202,6 +207,7 @@ fun DialogTextField(
             .clip(RoundedCornerShape(20.dp)),
         textStyle = MaterialTheme.typography.bodySmall.copy(
             color = MaterialTheme.colorScheme.primary,
+            letterSpacing = if (isPassword) 2.sp else 0.sp
         ),
         keyboardOptions = keyboardOptions,
         singleLine = true,

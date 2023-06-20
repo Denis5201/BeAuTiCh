@@ -1,6 +1,7 @@
 package com.example.beautich.presentation.profile
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -44,7 +46,7 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.25f)
+            .fillMaxHeight(0.28f)
     ) {
         if (uiState.avatar == null) {
             Image(
@@ -58,9 +60,25 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
             Image(
                 bitmap = uiState.avatar!!.asImageBitmap(),
                 contentDescription = null,
-                modifier = Modifier.align(Alignment.TopCenter),
-                contentScale = ContentScale.FillWidth
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .fillMaxWidth(),
+                contentScale = ContentScale.FillWidth,
+                alignment = Alignment.Center
             )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            0.0f to MaterialTheme.colorScheme.background,
+                            0.2f to Color.Transparent,
+                            0.8f to Color.Transparent,
+                            1f to MaterialTheme.colorScheme.background
+                        )
+                    )
+            )
+
         }
 
         Text(
@@ -110,7 +128,7 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                 .fillMaxSize()
                 .padding(horizontal = 24.dp)
         ) {
-            Spacer(modifier = Modifier.fillMaxHeight(0.25f))
+            Spacer(modifier = Modifier.fillMaxHeight(0.28f))
 
             Text(
                 text = it.fullName,
@@ -169,7 +187,7 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                 viewModel.openChangeProfileDialog()
             }
             TextButton(
-                onClick = {  },
+                onClick = { viewModel.openChangePasswordDialog() },
                 modifier = Modifier.padding(bottom = 32.dp)
             ) {
                 Text(
@@ -182,6 +200,9 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
 
         if (uiState.isChangeProfileDialogOpen) {
             ChangeProfileDataDialog(viewModel = viewModel)
+        }
+        if (uiState.isChangePasswordDialogOpen) {
+            ChangePasswordDialog(viewModel = viewModel)
         }
     }
 

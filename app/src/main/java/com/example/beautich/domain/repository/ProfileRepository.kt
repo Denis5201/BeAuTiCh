@@ -10,7 +10,7 @@ interface ProfileRepository {
 
     fun changeProfile(changeProfile: ChangeProfile): Flow<Result<Unit>>
 
-    fun changePassword(): Flow<Result<Unit>>
+    fun changePassword(oldPassword: String, newPassword: String): Flow<Result<Unit>>
 
     fun logout(): Flow<Result<Unit>>
 }
