@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.beautich.R
+import com.example.beautich.presentation.AppointmentCard
 import com.example.beautich.presentation.ErrorDialog
 import com.example.beautich.presentation.navigation.Screen
 import com.example.beautich.ui.theme.GrayLight
@@ -97,7 +98,8 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel) {
             } else {
                 LazyVerticalStaggeredGrid(
                     columns = StaggeredGridCells.Fixed(2),
-                    modifier = Modifier.padding(horizontal = 24.dp),
+                    modifier = Modifier
+                        .fillMaxSize().padding(horizontal = 24.dp),
                     verticalItemSpacing = 16.dp,
                     horizontalArrangement = Arrangement.spacedBy(28.dp)
                 ) {

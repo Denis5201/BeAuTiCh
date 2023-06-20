@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CreateChangeAppointmentDto(
     val clientName: String,
-    val clientPhone: String,
+    val clientPhone: String?,
     val startDateTime: String,
     val servicesId: List<String>
 ) {

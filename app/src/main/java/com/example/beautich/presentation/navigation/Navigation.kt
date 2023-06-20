@@ -1,13 +1,14 @@
 package com.example.beautich.presentation.navigation
 
+import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.beautich.Constants
-import com.example.beautich.presentation.ServiceSelectionScreen
 import com.example.beautich.presentation.appointment.details.AppointmentDetailsScreen
 import com.example.beautich.presentation.appointment.details.AppointmentDetailsViewModel
 import com.example.beautich.presentation.appointment.develop.AppointmentDevelopScreen
@@ -18,6 +19,8 @@ import com.example.beautich.presentation.registration.SignUpScreen
 import com.example.beautich.presentation.registration.SignUpViewModel
 import com.example.beautich.presentation.search.FilterScreen
 import com.example.beautich.presentation.search.SearchViewModel
+import com.example.beautich.presentation.service_selection.ServiceSelectionScreen
+import com.example.beautich.presentation.service_selection.ServiceSelectionViewModel
 import com.example.beautich.presentation.settings.MyServicesScreen
 import com.example.beautich.presentation.settings.MyServicesViewModel
 import com.example.beautich.presentation.settings.SubscriptionScreen
@@ -63,7 +66,9 @@ fun Navigation() {
                 nullable = true
             })
         ) {
-            val viewModel = koinViewModel<AppointmentDevelopViewModel>()
+            val viewModel = koinViewModel<AppointmentDevelopViewModel>(
+                viewModelStoreOwner = LocalContext.current as ComponentActivity
+            )
             AppointmentDevelopScreen(navController, viewModel)
         }
         composable(
@@ -83,12 +88,18 @@ fun Navigation() {
                     "/{${Constants.FROM_DEVELOP}}",
             arguments = listOf(navArgument(Constants.FROM_DEVELOP) { type = NavType.BoolType })
         ) {
+            val viewModel = koinViewModel<ServiceSelectionViewModel>()
+
             if (it.arguments!!.getBoolean(Constants.FROM_DEVELOP)) {
-                val viewModel = koinViewModel<AppointmentDevelopViewModel>()
-                ServiceSelectionScreen(navController, developViewModel = viewModel)
+                val developViewModel = koinViewModel<AppointmentDevelopViewModel>(
+                    viewModelStoreOwner = LocalContext.current as ComponentActivity
+                )
+                ServiceSelectionScreen(navController, viewModel, developViewModel = developViewModel)
             } else {
-                val viewModel = koinViewModel<SearchViewModel>()
-                ServiceSelectionScreen(navController,  searchViewModel = viewModel)
+                val searchViewModel = koinViewModel<SearchViewModel>(
+                    viewModelStoreOwner = LocalContext.current as ComponentActivity
+                )
+                ServiceSelectionScreen(navController, viewModel, searchViewModel = searchViewModel)
             }
         }
     }

@@ -7,6 +7,7 @@ import com.example.beautich.presentation.main.MainViewModel
 import com.example.beautich.presentation.profile.ProfileViewModel
 import com.example.beautich.presentation.registration.SignUpViewModel
 import com.example.beautich.presentation.search.SearchViewModel
+import com.example.beautich.presentation.service_selection.ServiceSelectionViewModel
 import com.example.beautich.presentation.settings.MyServicesViewModel
 import com.example.beautich.presentation.settings.SubscriptionViewModel
 import com.example.beautich.presentation.start.StartViewModel
@@ -24,4 +25,5 @@ val viewModelModule = module {
     viewModel { SearchViewModel(get()) }
     viewModel { AppointmentDevelopViewModel(get(), get()) }
     viewModel { AppointmentDetailsViewModel(get(), get()) }
+    viewModel { ServiceSelectionViewModel(get(), get()) }
 }

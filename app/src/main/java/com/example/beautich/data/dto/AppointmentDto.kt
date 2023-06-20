@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter
 data class AppointmentDto(
     val id: String,
     val clientName: String,
+    val clientPhone: String?,
     val services: List<ServiceShortDto>,
     val price: Double,
     val startDateTime: String,
@@ -23,6 +24,7 @@ data class AppointmentDto(
         return Appointment(
             id = id,
             clientName = clientName,
+            clientPhone = clientPhone,
             services = services.map { it.toServiceShort() },
             price = price,
             startDateTime = LocalDateTime.parse(startDateTime, DateTimeFormatter.ISO_DATE_TIME)

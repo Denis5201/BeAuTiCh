@@ -1,5 +1,6 @@
 package com.example.beautich.presentation.navigation
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
@@ -19,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -127,7 +129,9 @@ fun BottomNavigation(navController: NavController) {
                 MainScreen(navController, viewModel)
             }
             composable(BottomNavScreen.Search.route) {
-                val viewModel = koinViewModel<SearchViewModel>()
+                val viewModel = koinViewModel<SearchViewModel>(
+                    viewModelStoreOwner = LocalContext.current as ComponentActivity
+                )
                 SearchScreen(navController, viewModel)
             }
             composable(BottomNavScreen.Profile.route) {
