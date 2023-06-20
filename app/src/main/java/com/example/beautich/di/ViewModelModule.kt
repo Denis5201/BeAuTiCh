@@ -1,5 +1,7 @@
 package com.example.beautich.di
 
+import com.example.beautich.presentation.appointment.details.AppointmentDetailsViewModel
+import com.example.beautich.presentation.appointment.develop.AppointmentDevelopViewModel
 import com.example.beautich.presentation.login.SignInViewModel
 import com.example.beautich.presentation.main.MainViewModel
 import com.example.beautich.presentation.profile.ProfileViewModel
@@ -20,4 +22,6 @@ val viewModelModule = module {
     viewModel { MyServicesViewModel(get(), get()) }
     viewModel { MainViewModel(get()) }
     viewModel { SearchViewModel(get()) }
+    viewModel { AppointmentDevelopViewModel(get(), get()) }
+    viewModel { AppointmentDetailsViewModel(get(), get()) }
 }

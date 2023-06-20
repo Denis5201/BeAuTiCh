@@ -9,5 +9,5 @@ data class MainUiState(
     val errorMessage: String = "",
     val currentDay: LocalDate = LocalDate.now(),
     val currentDays: List<LocalDate> = emptyList(),
-    val appointmentsForWeek: List<Appointment> = emptyList()
+    val appointmentsForWeek: List<List<Appointment>> = emptyList()
 )

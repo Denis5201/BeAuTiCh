@@ -3,6 +3,7 @@ package com.example.beautich.presentation.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.beautich.MessageSource
+import com.example.beautich.domain.model.Appointment
 import com.example.beautich.domain.repository.AppointmentsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +20,7 @@ class MainViewModel(
 
     init {
         getCurrentDatesForWeek(_uiState.value.currentDay)
-        getAppointmentsForWeek(_uiState.value.currentDays.first(), _uiState.value.currentDays.last())
+        getAppointmentsForWeek()
     }
 
     fun closeErrorDialog() {
@@ -43,15 +44,22 @@ class MainViewModel(
         )
     }
 
-    private fun getAppointmentsForWeek(startDate: LocalDate, endDate: LocalDate) {
+    private fun getAppointmentsForWeek() {
         viewModelScope.launch {
             appointmentsRepository.getAppointmentsForTime(
-                startDate.atStartOfDay(), endDate.atTime(23, 59)
+                _uiState.value.currentDays.first().atStartOfDay(),
+                _uiState.value.currentDays.last().atTime(23, 59)
             ).collect { result ->
                 result.onSuccess {
+                    val newList = mutableListOf<List<Appointment>>()
+                    for (i in 0..6) {
+                        newList.add(it.filter { ap ->
+                            ap.startDateTime.toLocalDate() == _uiState.value.currentDays[i]
+                        })
+                    }
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
-                        appointmentsForWeek = it
+                        appointmentsForWeek = newList
                     )
                 }.onFailure {
                     _uiState.value = _uiState.value.copy(

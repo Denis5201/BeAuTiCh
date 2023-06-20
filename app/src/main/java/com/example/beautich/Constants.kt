@@ -7,4 +7,6 @@ object Constants {
     const val COMMON_OKHTTP_CLIENT = "common"
     const val IMAGE_NAME = "temp_photo"
     const val JPEG = ".jpg"
+    const val APPOINTMENT_ID = "appointment_id"
+    const val FROM_DEVELOP = "from_develop"
 }
