@@ -51,7 +51,7 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.8f),
+                .fillMaxHeight(0.75f),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.fillMaxHeight(0.3f))

@@ -1,5 +1,6 @@
 package com.example.beautich.data.api
 
+import com.example.beautich.data.dto.ChangePassword
 import com.example.beautich.data.dto.ChangeUser
 import com.example.beautich.data.dto.WorkerProfile
 import retrofit2.http.Body
@@ -17,7 +18,7 @@ interface ProfileApi {
     suspend fun changeProfile(@Body changeUser: ChangeUser)
 
     @PUT("api/profile/password")
-    suspend fun changePassword()//TODO: Возможно что-то изменится, поэтому пока без реализации
+    suspend fun changePassword(@Body changePassword: ChangePassword)
 
     @POST("api/auth/logout")
     suspend fun logout()

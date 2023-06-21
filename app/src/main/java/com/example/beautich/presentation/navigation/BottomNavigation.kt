@@ -1,5 +1,6 @@
 package com.example.beautich.presentation.navigation
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
@@ -19,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -30,8 +32,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.beautich.R
+import com.example.beautich.presentation.main.MainScreen
+import com.example.beautich.presentation.main.MainViewModel
 import com.example.beautich.presentation.profile.ProfileScreen
 import com.example.beautich.presentation.profile.ProfileViewModel
+import com.example.beautich.presentation.search.SearchScreen
+import com.example.beautich.presentation.search.SearchViewModel
 import com.example.beautich.presentation.settings.SettingsScreen
 import org.koin.androidx.compose.koinViewModel
 
@@ -119,10 +125,14 @@ fun BottomNavigation(navController: NavController) {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(BottomNavScreen.Main.route) {
-
+                val viewModel = koinViewModel<MainViewModel>()
+                MainScreen(navController, viewModel)
             }
             composable(BottomNavScreen.Search.route) {
-
+                val viewModel = koinViewModel<SearchViewModel>(
+                    viewModelStoreOwner = LocalContext.current as ComponentActivity
+                )
+                SearchScreen(navController, viewModel)
             }
             composable(BottomNavScreen.Profile.route) {
                 val viewModel = koinViewModel<ProfileViewModel>()

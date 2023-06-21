@@ -100,6 +100,10 @@ fun MyServicesScreen(navController: NavController, viewModel: MyServicesViewMode
 
         Spacer(modifier = Modifier.padding(16.dp))
 
+        if (uiState.isLoading) {
+            return@Column
+        }
+
         if (uiState.isSubscribing) {
             if (uiState.servicesList.isEmpty()) {
                 Image(

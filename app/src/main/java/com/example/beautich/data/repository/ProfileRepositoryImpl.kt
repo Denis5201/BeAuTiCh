@@ -2,6 +2,7 @@ package com.example.beautich.data.repository
 
 import android.util.Log
 import com.example.beautich.data.api.ProfileApi
+import com.example.beautich.data.dto.ChangePassword
 import com.example.beautich.data.dto.ChangeUser
 import com.example.beautich.data.getError
 import com.example.beautich.domain.model.ChangeProfile
@@ -38,9 +39,9 @@ class ProfileRepositoryImpl(
         }
     }.flowOn(Dispatchers.IO)
 
-    override fun changePassword(): Flow<Result<Unit>> = flow {
+    override fun changePassword(oldPassword: String, newPassword: String): Flow<Result<Unit>> = flow {
         try {
-            api.changePassword()
+            api.changePassword(ChangePassword(oldPassword, newPassword))
 
             emit(Result.success(Unit))
         } catch (e: Exception) {

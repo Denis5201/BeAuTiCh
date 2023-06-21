@@ -42,48 +42,44 @@ fun SettingsScreen(navController: NavController) {
         Spacer(modifier = Modifier.padding(10.dp))
 
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    navController.navigate(Screen.MyServicesScreen.route)
+                },
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = stringResource(R.string.watch_my_services),
-                modifier = Modifier.clickable {
-                    navController.navigate(Screen.MyServicesScreen.route)
-                },
                 style = MaterialTheme.typography.headlineSmall,
                 color = Color.White
             )
             Image(
                 imageVector = ImageVector.vectorResource(R.drawable.arrow_right),
-                contentDescription = null,
-                modifier = Modifier.clickable {
-                    navController.navigate(Screen.MyServicesScreen.route)
-                }
+                contentDescription = null
             )
         }
 
         Spacer(modifier = Modifier.padding(8.dp))
 
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    navController.navigate(Screen.SubscriptionScreen.route)
+                },
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = stringResource(R.string.info_about_subscription),
-                modifier = Modifier.clickable {
-                    navController.navigate(Screen.SubscriptionScreen.route)
-                },
                 style = MaterialTheme.typography.headlineSmall,
                 color = Color.White
             )
             Image(
                 imageVector = ImageVector.vectorResource(R.drawable.arrow_right),
-                contentDescription = null,
-                modifier = Modifier.clickable {
-                    navController.navigate(Screen.SubscriptionScreen.route)
-                }
+                contentDescription = null
             )
         }
     }

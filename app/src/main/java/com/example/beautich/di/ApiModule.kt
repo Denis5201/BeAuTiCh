@@ -1,6 +1,7 @@
 package com.example.beautich.di
 
 import com.example.beautich.Constants
+import com.example.beautich.data.api.AppointmentsApi
 import com.example.beautich.data.api.AuthApi
 import com.example.beautich.data.api.AvatarApi
 import com.example.beautich.data.api.ProfileApi
@@ -20,6 +21,7 @@ val apiModule = module {
     single { provideProfileApi(get()) }
     single { provideSubscriptionApi(get()) }
     single { provideServicesApi(get()) }
+    single { provideAppointmentsApi(get()) }
 }
 
 fun provideAuthApi(okHttpClient: OkHttpClient): AuthApi {
@@ -39,3 +41,6 @@ fun provideSubscriptionApi(retrofit: Retrofit): SubscriptionApi =
     retrofit.create(SubscriptionApi::class.java)
 
 fun provideServicesApi(retrofit: Retrofit): ServicesApi = retrofit.create(ServicesApi::class.java)
+
+fun provideAppointmentsApi(retrofit: Retrofit): AppointmentsApi =
+    retrofit.create(AppointmentsApi::class.java)

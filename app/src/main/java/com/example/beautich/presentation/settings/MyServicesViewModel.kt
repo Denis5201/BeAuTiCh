@@ -172,6 +172,7 @@ class MyServicesViewModel(
                     _uiState.value = _uiState.value.copy(
                         isSubscribing = true
                     )
+                    getMyServices()
                 }.onFailure {
                     _uiState.value = _uiState.value.copy(
                         isErrorDialogOpen = true,
@@ -191,6 +192,10 @@ class MyServicesViewModel(
                     )
                     if (it) {
                         getMyServices()
+                    } else {
+                        _uiState.value = _uiState.value.copy(
+                            isLoading = false
+                        )
                     }
                 }.onFailure {
                     _uiState.value = _uiState.value.copy(
