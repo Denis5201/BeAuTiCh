@@ -66,8 +66,25 @@
     <string name="choose_datetime_appointment">Выберите дату и время записи:</string>
     <string name="write_client_phone">Введите номер телефона клиента:</string>
     <string name="choose_services">Выбрать услуги</string>
+    <string name="choose_services_for_filters">Выбрать услуги для фильтрации</string>
     <string name="choose">Выбрать</string>
     <string name="choose_time">Выберите время</string>
+    <string name="services">Услуги</string>
+    <string name="start_time">Время записи:</string>
+    <string name="end_time">Окончание записи:</string>
+    <string name="client_has_been">Клиент\nпринят</string>
+    <string name="cancel_appointment">Отменить\nзапись</string>
+    <string name="change_data">Изменить данные</string>
+    <string name="appointment_done">Запись\nзавершена</string>
+    <string name="appointment_canceled">Запись\nотменена</string>
+    <string name="filters">Фильтры</string>
+    <string name="sorting">Сортировка</string>
+    <string name="by_price">По цене:</string>
+    <string name="by_date">По дате записи:</string>
+    <string name="from">От:</string>
+    <string name="to">До:</string>
+    <string name="input_price">Введите цену</string>
+    <string name="choose_date">Выберите дату</string>
     <string-array name="day_of_week">
         <item>Пн</item>
         <item>Вт</item>

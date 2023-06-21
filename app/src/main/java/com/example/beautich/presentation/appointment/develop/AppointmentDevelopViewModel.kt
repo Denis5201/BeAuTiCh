@@ -1,9 +1,7 @@
 package com.example.beautich.presentation.appointment.develop
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.beautich.Constants
 import com.example.beautich.MessageSource
 import com.example.beautich.domain.model.Appointment
 import com.example.beautich.domain.model.CreateChangeAppointment
@@ -19,8 +17,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class AppointmentDevelopViewModel(
-    private val appointmentsRepository: AppointmentsRepository,
-    savedStateHandle: SavedStateHandle
+    private val appointmentsRepository: AppointmentsRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AppointmentDevelopUiState())
@@ -44,19 +41,14 @@ class AppointmentDevelopViewModel(
         _clientPhone.value = value
     }
 
-    val appointmentId: String?
+    var appointmentId: String? = null
+        private set
     private var appointment: Appointment? = null
     private var date: LocalDate = LocalDate.now()
     private var time: LocalTime = LocalTime.MIN
-    init {
-        appointmentId = savedStateHandle[Constants.APPOINTMENT_ID]
-        if (appointmentId == null) {
-            _uiState.value = _uiState.value.copy(
-                isLoading = false
-            )
-        } else {
-            getAppointment(appointmentId)
-        }
+    fun setAppointmentId(id: String) {
+        appointmentId = id
+        getAppointment(id)
     }
 
     fun addService(service: ServiceShort) {

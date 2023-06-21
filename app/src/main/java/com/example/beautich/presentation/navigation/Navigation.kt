@@ -69,7 +69,8 @@ fun Navigation() {
             val viewModel = koinViewModel<AppointmentDevelopViewModel>(
                 viewModelStoreOwner = LocalContext.current as ComponentActivity
             )
-            AppointmentDevelopScreen(navController, viewModel)
+            val id = it.arguments?.getString(Constants.APPOINTMENT_ID)
+            AppointmentDevelopScreen(navController, viewModel, id)
         }
         composable(
             route = Screen.AppointmentDetailsScreen.route +
@@ -80,7 +81,9 @@ fun Navigation() {
             AppointmentDetailsScreen(navController, viewModel)
         }
         composable(Screen.FilterScreen.route) {
-            val viewModel = koinViewModel<SearchViewModel>()
+            val viewModel = koinViewModel<SearchViewModel>(
+                viewModelStoreOwner = LocalContext.current as ComponentActivity
+            )
             FilterScreen(navController, viewModel)
         }
         composable(

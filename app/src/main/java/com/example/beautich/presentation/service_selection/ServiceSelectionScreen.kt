@@ -23,6 +23,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +52,20 @@ fun ServiceSelectionScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val devServices = developViewModel?.uiState?.collectAsStateWithLifecycle()?.value?.servicesId
+    val searchServices = searchViewModel?.uiState?.collectAsStateWithLifecycle()?.value?.servicesId
+
+    if (devServices != null && uiState.services.isNotEmpty()) {
+        LaunchedEffect(key1 = Unit) {
+            viewModel.setAlreadyChosen(devServices)
+        }
+    }
+    if (searchServices != null && uiState.services.isNotEmpty()) {
+        LaunchedEffect(key1 = Unit) {
+            viewModel.setAlreadyChosen(searchServices)
+        }
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -101,7 +116,9 @@ fun ServiceSelectionScreen(
         ) {
             uiState.services.forEach {
                 Box(
-                    modifier = Modifier.height(IntrinsicSize.Min).width(IntrinsicSize.Min)
+                    modifier = Modifier
+                        .height(IntrinsicSize.Min)
+                        .width(IntrinsicSize.Max)
                 ) {
                     Text(
                         text = it.first.name,
@@ -111,7 +128,21 @@ fun ServiceSelectionScreen(
                                 MaterialTheme.colorScheme.tertiary,
                                 RoundedCornerShape(20.dp)
                             )
-                            .clickable { viewModel.changeSelection(it.first.id) }
+                            .clickable {
+                                viewModel.changeSelection(it.first.id)
+                                if (devServices != null) {
+                                    if (it.second)
+                                        developViewModel.deleteService(it.first)
+                                    else
+                                        developViewModel.addService(it.first)
+                                }
+                                if (searchServices != null) {
+                                    if (it.second)
+                                        searchViewModel.deleteService(it.first)
+                                    else
+                                        searchViewModel.addService(it.first)
+                                }
+                            }
                             .padding(horizontal = 10.dp, vertical = 5.dp),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.primary,

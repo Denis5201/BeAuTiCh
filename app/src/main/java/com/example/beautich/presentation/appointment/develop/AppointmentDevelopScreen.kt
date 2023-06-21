@@ -43,6 +43,7 @@ import androidx.navigation.NavController
 import com.example.beautich.R
 import com.example.beautich.presentation.AppTextField
 import com.example.beautich.presentation.DateTimeTextField
+import com.example.beautich.presentation.ErrorDialog
 import com.example.beautich.presentation.WhiteButton
 import com.example.beautich.presentation.navigation.Screen
 import com.example.beautich.ui.theme.Gray
@@ -53,8 +54,13 @@ import java.time.ZoneId
 @Composable
 fun AppointmentDevelopScreen(
     navController: NavController,
-    viewModel: AppointmentDevelopViewModel
+    viewModel: AppointmentDevelopViewModel,
+    id: String? = null
 ) {
+
+    if (id != null && viewModel.appointmentId == null) {
+        viewModel.setAppointmentId(id)
+    }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val action by viewModel.action.collectAsStateWithLifecycle(null)
@@ -180,6 +186,12 @@ fun AppointmentDevelopScreen(
                     viewModel.changeAppointment()
                 }
             }
+        }
+    }
+
+    if (uiState.isErrorDialogOpen) {
+        ErrorDialog(message = uiState.errorMessage) {
+            viewModel.closeErrorDialog()
         }
     }
 

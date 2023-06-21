@@ -19,7 +19,7 @@ class ServiceSelectionViewModel(
     private val _uiState = MutableStateFlow(ServiceSelectionUiState())
     val uiState: StateFlow<ServiceSelectionUiState> = _uiState
 
-    val fromDevelop: Boolean
+    private val fromDevelop: Boolean
     init {
         fromDevelop = checkNotNull(savedStateHandle[Constants.FROM_DEVELOP])
         getServices()
@@ -34,6 +34,9 @@ class ServiceSelectionViewModel(
                 newList.add(pair)
             }
         }
+        _uiState.value =  _uiState.value.copy(
+            services = newList
+        )
     }
 
     fun changeSelection(id: String) {

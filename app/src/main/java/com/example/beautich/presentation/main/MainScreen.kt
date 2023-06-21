@@ -121,7 +121,10 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel) {
                 contentDescription = null,
                 modifier = Modifier
                     .clickable {
-
+                        viewModel.loadPreviousWeek()
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(6)
+                        }
                     }
                     .padding(start = 8.dp, end = 4.dp),
                 tint = Color.White
@@ -194,7 +197,10 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel) {
                 contentDescription = null,
                 modifier = Modifier
                     .clickable {
-
+                        viewModel.loadNextWeek()
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(0)
+                        }
                     }
                     .padding(start = 4.dp, end = 8.dp),
                 tint = Color.White

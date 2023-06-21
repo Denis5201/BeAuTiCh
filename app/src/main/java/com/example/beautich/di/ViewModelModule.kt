@@ -23,7 +23,7 @@ val viewModelModule = module {
     viewModel { MyServicesViewModel(get(), get()) }
     viewModel { MainViewModel(get()) }
     viewModel { SearchViewModel(get()) }
-    viewModel { AppointmentDevelopViewModel(get(), get()) }
+    viewModel { AppointmentDevelopViewModel(get()) }
     viewModel { AppointmentDetailsViewModel(get(), get()) }
     viewModel { ServiceSelectionViewModel(get(), get()) }
 }

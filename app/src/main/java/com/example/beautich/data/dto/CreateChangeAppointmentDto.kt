@@ -8,7 +8,7 @@ data class CreateChangeAppointmentDto(
     val clientName: String,
     val clientPhone: String?,
     val startDateTime: String,
-    val servicesId: List<String>
+    val idServices: List<String>
 ) {
     companion object {
         fun fromCreateChangeAppointment(
@@ -18,7 +18,7 @@ data class CreateChangeAppointmentDto(
                 clientName = createChangeAppointment.clientName,
                 clientPhone = createChangeAppointment.clientPhone,
                 startDateTime = createChangeAppointment.startDateTime.toString(),
-                servicesId = createChangeAppointment.servicesId
+                idServices = createChangeAppointment.servicesId
             )
         }
     }

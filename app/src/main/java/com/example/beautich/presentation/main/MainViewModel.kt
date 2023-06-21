@@ -29,6 +29,16 @@ class MainViewModel(
         )
     }
 
+    fun loadPreviousWeek() {
+        getCurrentDatesForWeek(_uiState.value.currentDays.first().minusWeeks(1L))
+        getAppointmentsForWeek()
+    }
+
+    fun loadNextWeek() {
+        getCurrentDatesForWeek(_uiState.value.currentDays.first().plusWeeks(1L))
+        getAppointmentsForWeek()
+    }
+
     private fun getCurrentDatesForWeek(currentDate: LocalDate) {
         val newCurrentDays = mutableListOf<LocalDate>()
 
