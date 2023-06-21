@@ -2,10 +2,12 @@ package com.example.beautich.data.repository
 
 import android.util.Log
 import com.example.beautich.data.api.AppointmentsApi
-import com.example.beautich.data.dto.CreateChangeAppointmentDto
+import com.example.beautich.data.dto.ChangeAppointmentDto
+import com.example.beautich.data.dto.CreateAppointmentDto
 import com.example.beautich.data.getError
 import com.example.beautich.domain.model.Appointment
-import com.example.beautich.domain.model.CreateChangeAppointment
+import com.example.beautich.domain.model.ChangeAppointment
+import com.example.beautich.domain.model.CreateAppointment
 import com.example.beautich.domain.model.StatusAppointment
 import com.example.beautich.domain.repository.AppointmentsRepository
 import kotlinx.coroutines.Dispatchers
@@ -65,11 +67,11 @@ class AppointmentsRepositoryImpl(
     }.flowOn(Dispatchers.IO)
 
     override fun createAppointment(
-        createAppointment: CreateChangeAppointment
+        createAppointment: CreateAppointment
     ): Flow<Result<Unit>> = flow {
         try {
             api.createAppointment(
-                CreateChangeAppointmentDto.fromCreateChangeAppointment(createAppointment)
+                CreateAppointmentDto.fromCreateAppointment(createAppointment)
             )
 
             emit(Result.success(Unit))
@@ -81,12 +83,12 @@ class AppointmentsRepositoryImpl(
 
     override fun changeAppointment(
         appointmentId: String,
-        changeAppointment: CreateChangeAppointment
+        changeAppointment: ChangeAppointment
     ): Flow<Result<Unit>> = flow {
         try {
             api.changeAppointment(
                 appointmentId,
-                CreateChangeAppointmentDto.fromCreateChangeAppointment(changeAppointment)
+                ChangeAppointmentDto.fromChangeAppointment(changeAppointment)
             )
 
             emit(Result.success(Unit))

@@ -2,9 +2,11 @@ package com.example.beautich.presentation.appointment.develop
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.beautich.Constants
 import com.example.beautich.MessageSource
 import com.example.beautich.domain.model.Appointment
-import com.example.beautich.domain.model.CreateChangeAppointment
+import com.example.beautich.domain.model.ChangeAppointment
+import com.example.beautich.domain.model.CreateAppointment
 import com.example.beautich.domain.model.ServiceShort
 import com.example.beautich.domain.repository.AppointmentsRepository
 import kotlinx.coroutines.channels.Channel
@@ -44,7 +46,7 @@ class AppointmentDevelopViewModel(
     var appointmentId: String? = null
         private set
     private var appointment: Appointment? = null
-    private var date: LocalDate = LocalDate.now()
+    private var date: LocalDate? = null
     private var time: LocalTime = LocalTime.MIN
     fun setAppointmentId(id: String) {
         appointmentId = id
@@ -81,7 +83,7 @@ class AppointmentDevelopViewModel(
 
     fun setDate(newDate: LocalDate) {
         date = newDate
-        _dateTime.value = date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+        _dateTime.value = newDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 
         _uiState.value = _uiState.value.copy(
             isDateDialogOpen = false,
@@ -111,9 +113,9 @@ class AppointmentDevelopViewModel(
         }
         viewModelScope.launch {
             appointmentsRepository.createAppointment(
-                CreateChangeAppointment(
+                CreateAppointment(
                     _clientName.value.trim(), _clientPhone.value.trim().ifEmpty { null },
-                    date.atTime(time), _uiState.value.servicesId.map { it.id }
+                    date!!.atTime(time), _uiState.value.servicesId.map { it.id }
                 )
             ).collect { result ->
                 result.onSuccess {
@@ -134,9 +136,9 @@ class AppointmentDevelopViewModel(
         }
         viewModelScope.launch {
             appointmentsRepository.changeAppointment(
-                appointmentId!!, CreateChangeAppointment(
+                appointmentId!!, ChangeAppointment(
                     _clientName.value.trim(), _clientPhone.value.trim().ifEmpty { null },
-                    date.atTime(time), _uiState.value.servicesId.map { it.id }
+                    date!!.atTime(time), _uiState.value.servicesId.map { it.id }
                 )
             ).collect { result ->
                 result.onSuccess {
@@ -162,8 +164,10 @@ class AppointmentDevelopViewModel(
                     appointment = it
                     _clientName.value = it.clientName
                     _dateTime.value = it.startDateTime.format(
-                        DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
+                        Constants.dateTimeFormat
                     )
+                    date = it.startDateTime.toLocalDate()
+                    time = it.startDateTime.toLocalTime()
                     _clientPhone.value = it.clientPhone ?: ""
                 }.onFailure {
                     _uiState.value = _uiState.value.copy(
@@ -177,7 +181,7 @@ class AppointmentDevelopViewModel(
     }
 
     private fun isValidInput(): Boolean {
-        if (_clientName.value.trim().isEmpty() || _dateTime.value.isEmpty()) {
+        if (_clientName.value.trim().isEmpty() || date == null) {
             return false
         }
         if (_uiState.value.servicesId.isEmpty()) {

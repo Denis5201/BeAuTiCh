@@ -39,6 +39,10 @@ class MainViewModel(
         getAppointmentsForWeek()
     }
 
+    fun refresh() {
+        getAppointmentsForWeek()
+    }
+
     private fun getCurrentDatesForWeek(currentDate: LocalDate) {
         val newCurrentDays = mutableListOf<LocalDate>()
 

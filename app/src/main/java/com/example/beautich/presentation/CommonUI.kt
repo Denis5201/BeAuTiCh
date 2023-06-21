@@ -45,10 +45,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
+import com.example.beautich.Constants
 import com.example.beautich.R
 import com.example.beautich.domain.model.Appointment
 import com.example.beautich.presentation.navigation.Screen
 import com.example.beautich.ui.theme.Orange
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun WhiteButton(
@@ -321,7 +323,8 @@ fun DateTimeTextField(
 @Composable
 fun AppointmentCard(
     navController: NavController,
-    appointment: Appointment
+    appointment: Appointment,
+    fullDate: Boolean = false
 ) {
     Box(
         modifier = Modifier
@@ -368,7 +371,10 @@ fun AppointmentCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "${appointment.startDateTime.hour}:${appointment.startDateTime.minute}",
+                    text = if (fullDate)
+                        appointment.startDateTime.format(Constants.dateTimeFormat)
+                    else
+                        appointment.startDateTime.format(DateTimeFormatter.ofPattern("H:mm")),
                     style = MaterialTheme.typography.labelMedium,
                     color = Orange
                 )

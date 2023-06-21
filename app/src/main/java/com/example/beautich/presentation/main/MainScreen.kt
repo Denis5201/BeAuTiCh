@@ -22,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -99,7 +100,8 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel) {
                 LazyVerticalStaggeredGrid(
                     columns = StaggeredGridCells.Fixed(2),
                     modifier = Modifier
-                        .fillMaxSize().padding(horizontal = 24.dp),
+                        .fillMaxSize()
+                        .padding(horizontal = 24.dp),
                     verticalItemSpacing = 16.dp,
                     horizontalArrangement = Arrangement.spacedBy(28.dp)
                 ) {
@@ -205,6 +207,12 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel) {
                     .padding(start = 4.dp, end = 8.dp),
                 tint = Color.White
             )
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        if (!uiState.isLoading) {
+            viewModel.refresh()
         }
     }
 

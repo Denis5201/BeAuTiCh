@@ -1,7 +1,8 @@
 package com.example.beautich.domain.repository
 
 import com.example.beautich.domain.model.Appointment
-import com.example.beautich.domain.model.CreateChangeAppointment
+import com.example.beautich.domain.model.ChangeAppointment
+import com.example.beautich.domain.model.CreateAppointment
 import com.example.beautich.domain.model.StatusAppointment
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
@@ -21,11 +22,11 @@ interface AppointmentsRepository {
 
     fun getAppointment(appointmentId: String): Flow<Result<Appointment>>
 
-    fun createAppointment(createAppointment: CreateChangeAppointment): Flow<Result<Unit>>
+    fun createAppointment(createAppointment: CreateAppointment): Flow<Result<Unit>>
 
     fun changeAppointment(
         appointmentId: String,
-        changeAppointment: CreateChangeAppointment
+        changeAppointment: ChangeAppointment
     ): Flow<Result<Unit>>
 
     fun deleteAppointment(appointmentId: String): Flow<Result<Unit>>

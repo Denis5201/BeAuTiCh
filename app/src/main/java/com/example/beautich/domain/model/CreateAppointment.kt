@@ -2,9 +2,9 @@ package com.example.beautich.domain.model
 
 import java.time.LocalDateTime
 
-data class CreateChangeAppointment(
+data class CreateAppointment(
     val clientName: String,
     val clientPhone: String?,
     val startDateTime: LocalDateTime,
-    val servicesId: List<String>
+    val idServices: List<String>
 )

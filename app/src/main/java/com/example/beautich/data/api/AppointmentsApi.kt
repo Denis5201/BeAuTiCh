@@ -1,7 +1,8 @@
 package com.example.beautich.data.api
 
 import com.example.beautich.data.dto.AppointmentDto
-import com.example.beautich.data.dto.CreateChangeAppointmentDto
+import com.example.beautich.data.dto.ChangeAppointmentDto
+import com.example.beautich.data.dto.CreateAppointmentDto
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -28,12 +29,12 @@ interface AppointmentsApi {
     suspend fun getAppointment(@Path("appointmentId") appointmentId: String): AppointmentDto
 
     @POST("api/appointments")
-    suspend fun createAppointment(@Body createAppointmentDto: CreateChangeAppointmentDto)
+    suspend fun createAppointment(@Body createAppointmentDto: CreateAppointmentDto)
 
     @PUT("api/appointments/{appointmentId}")
     suspend fun changeAppointment(
         @Path("appointmentId") appointmentId: String,
-        @Body changeAppointmentDto: CreateChangeAppointmentDto
+        @Body changeAppointmentDto: ChangeAppointmentDto
     )
 
     @DELETE("api/appointments/{appointmentId}")
