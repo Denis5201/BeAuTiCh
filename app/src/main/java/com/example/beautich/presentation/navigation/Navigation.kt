@@ -2,6 +2,7 @@ package com.example.beautich.presentation.navigation
 
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -28,6 +29,7 @@ import com.example.beautich.presentation.settings.SubscriptionViewModel
 import com.example.beautich.presentation.start.StartScreen
 import com.example.beautich.presentation.start.StartViewModel
 import org.koin.androidx.compose.koinViewModel
+import org.koin.androidx.compose.navigation.koinNavViewModel
 
 @Composable
 fun Navigation() {
@@ -66,9 +68,7 @@ fun Navigation() {
                 nullable = true
             })
         ) {
-            val viewModel = koinViewModel<AppointmentDevelopViewModel>(
-                viewModelStoreOwner = LocalContext.current as ComponentActivity
-            )
+            val viewModel = koinNavViewModel<AppointmentDevelopViewModel>()
             val id = it.arguments?.getString(Constants.APPOINTMENT_ID)
             AppointmentDevelopScreen(navController, viewModel, id)
         }
@@ -94,8 +94,11 @@ fun Navigation() {
             val viewModel = koinViewModel<ServiceSelectionViewModel>()
 
             if (it.arguments!!.getBoolean(Constants.FROM_DEVELOP)) {
-                val developViewModel = koinViewModel<AppointmentDevelopViewModel>(
-                    viewModelStoreOwner = LocalContext.current as ComponentActivity
+                val parentEntry = remember(it) {
+                    navController.getBackStackEntry(Screen.AppointmentDevelopScreen.route)
+                }
+                val developViewModel = koinNavViewModel<AppointmentDevelopViewModel>(
+                    viewModelStoreOwner = parentEntry
                 )
                 ServiceSelectionScreen(navController, viewModel, developViewModel = developViewModel)
             } else {

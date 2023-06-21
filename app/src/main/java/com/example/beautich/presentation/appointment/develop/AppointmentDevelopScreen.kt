@@ -59,7 +59,7 @@ fun AppointmentDevelopScreen(
 ) {
 
     if (id != null && viewModel.appointmentId == null) {
-        viewModel.setAppointmentId(id)
+            viewModel.setAppointmentId(id)
     }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

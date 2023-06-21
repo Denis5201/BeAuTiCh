@@ -85,6 +85,7 @@
     <string name="to">До:</string>
     <string name="input_price">Введите цену</string>
     <string name="choose_date">Выберите дату</string>
+    <string name="clean_all_filters">Сбросить все фильтры</string>
     <string-array name="day_of_week">
         <item>Пн</item>
         <item>Вт</item>

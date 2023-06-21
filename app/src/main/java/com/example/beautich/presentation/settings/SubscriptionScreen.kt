@@ -73,6 +73,10 @@ fun SubscriptionScreen(navController: NavController, viewModel: SubscriptionView
 
         Spacer(modifier = Modifier.padding(20.dp))
 
+        if (uiState.isLoading) {
+            return@Column
+        }
+
         if (uiState.isSubscribing) {
             Text(
                 text = stringResource(

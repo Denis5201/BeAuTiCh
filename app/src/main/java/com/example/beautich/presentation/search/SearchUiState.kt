@@ -12,4 +12,6 @@ data class SearchUiState(
     val endPrice: Double? = null,
     val startDate: LocalDate? = null,
     val endDate: LocalDate? = null,
+    val isDateDialogOpen: Boolean = false,
+    val currentDialog: Int = 1
 )

@@ -44,7 +44,7 @@ class AppointmentsRepositoryImpl(
         try {
             val appointmentsList = api.getAppointmentsForFilters(
                 startPrice, endPrice,
-                startDate.toString(), endDate.toString(),
+                startDate?.toString(), endDate?.toString(),
                 servicesId
             ).map { it.toAppointment() }
 

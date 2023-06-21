@@ -57,6 +57,10 @@ class SubscriptionViewModel(
                     )
                     if (it) {
                         getSubscriptionInfo()
+                    } else {
+                        _uiState.value = _uiState.value.copy(
+                            isLoading = false
+                        )
                     }
                 }.onFailure {
                     _uiState.value = _uiState.value.copy(
