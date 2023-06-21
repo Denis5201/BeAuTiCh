@@ -51,10 +51,10 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.75f),
+                .fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.fillMaxHeight(0.3f))
+            Spacer(modifier = Modifier.fillMaxHeight(0.25f))
             Text(
                 text = stringResource(R.string.welcome),
                 style = MaterialTheme.typography.titleLarge,
@@ -133,34 +133,37 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel) {
                     modifier = Modifier,
                     isPassword = true
                 )
+
+                Spacer(modifier = Modifier.padding(16.dp))
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    WhiteButton(
+                        text = stringResource(R.string.register),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, bottom = 16.dp, end = 16.dp)
+                    ) {
+                        viewModel.signUp()
+                    }
+                    TextButton(
+                        onClick = { viewModel.navigateToSignIn() },
+                        modifier = Modifier.padding(bottom = 32.dp)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.already_have_account),
+                            style = MaterialTheme.typography.headlineMedium,
+                            color = Color.White
+                        )
+                    }
+                }
             }
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            WhiteButton(
-                text = stringResource(R.string.register),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 48.dp, bottom = 16.dp, end = 48.dp)
-            ) {
-                viewModel.signUp()
-            }
-            TextButton(
-                onClick = { viewModel.navigateToSignIn() },
-                modifier = Modifier.padding(bottom = 32.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.already_have_account),
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Color.White
-                )
-            }
-        }
+
     }
 
     if (action is SignUpAction.ShowError) {

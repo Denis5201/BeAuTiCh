@@ -80,7 +80,7 @@ fun SearchScreen(navController: NavController, viewModel: SearchViewModel) {
             horizontalArrangement = Arrangement.spacedBy(28.dp)
         ) {
             items(appointment) {
-                AppointmentCard(navController, it)
+                AppointmentCard(navController, it, true)
             }
         }
     }
